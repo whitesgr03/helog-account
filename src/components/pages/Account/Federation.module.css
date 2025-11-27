@@ -1,0 +1,45 @@
+.federation {
+	display: flex;
+	row-gap: 15px;
+	flex-direction: column;
+	border-top: 1px solid var(--light-scheme-color);
+	padding: 0 5%;
+	padding-top: 20px;
+}
+
+.federation-icon {
+	width: var(--icon-size-desktop);
+	height: var(--icon-size-desktop);
+}
+
+.federation-link {
+	display: flex;
+	column-gap: 10px;
+	justify-content: center;
+	align-items: center;
+	transition: transform 0.1s ease;
+	cursor: pointer;
+	border: 2px solid var(--light-scheme-color);
+	border-radius: 5px;
+	background-color: var(--dark-scheme-color-bgc);
+	padding: 10px;
+	width: 100%;
+	min-height: 45px;
+	color: var(--light-scheme-color);
+	white-space: nowrap;
+}
+
+/* Pseudo classes */
+.federation-link:active {
+	transform: scale(0.95) translateY(5px);
+}
+
+.federation-link:hover {
+	background-color: rgb(var(--light-scheme-color-rgb) / 20%);
+}
+
+@media (width >= 550px) {
+	.federation {
+		align-items: center;
+	}
+}

@@ -1,0 +1,42 @@
+.account {
+	display: flex;
+	flex: 1 1 100%;
+	justify-content: center;
+}
+
+.container {
+	display: flex;
+	row-gap: 15px;
+	flex: 1 1 100%;
+	flex-direction: column;
+	padding: 5%;
+	max-width: 500px;
+}
+
+.title {
+	color: var(--light-scheme-color);
+}
+
+@media (width >= 440px) {
+	.container {
+		padding: 40px 10%;
+	}
+}
+
+@media (width >= 500px) {
+	.container {
+		padding: 40px 5%;
+	}
+}
+
+@media (width >= 600px) {
+	.container {
+		padding: 40px 0;
+	}
+}
+
+@media (width >= 900px) {
+	.container {
+		padding: 50px 0;
+	}
+}
