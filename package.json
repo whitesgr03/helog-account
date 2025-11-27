@@ -7,9 +7,7 @@
 		"dev": "vite",
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
-		"preview": "vite preview",
-		"prepare": "husky",
-		"commitlint": "commitlint --edit"
+		"preview": "vite preview"
 	},
 	"dependencies": {
 		"react": "^19.2.0",
