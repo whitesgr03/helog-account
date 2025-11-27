@@ -1,0 +1,33 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 5px 5px 1px var(--light-scheme-layout-shadow);
+	background-color: var(--light-scheme-layout-bgc);
+}
+
+.link {
+	padding: 10px;
+}
+
+.logo {
+	color: var(--light-scheme-highlight);
+}
+
+@media (width >= 700px) {
+	.header {
+		padding: 0 15px;
+	}
+}
+
+@media (width >= 1000px) {
+	.header {
+		padding: 0 40px;
+	}
+}
+
+@media (width >= 1300px) {
+	.header {
+		padding: 0 50px;
+	}
+}
