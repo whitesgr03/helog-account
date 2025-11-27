@@ -31,6 +31,11 @@ export const App = () => {
 		});
 	}, []);
 
+	useEffect(() => {
+		if (user) {
+			window.location.assign(`${import.meta.env.VITE_HELOG_URL}`);
+		}
+	}, [user]);
 	return (
 		<div className={styles.app}>
 			<ScrollRestoration getKey={location => location.key} />
