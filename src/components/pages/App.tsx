@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router';
 
 import 'normalize.css';
@@ -6,18 +7,29 @@ import styles from './App.module.css';
 import { Footer } from '../layout/footer/Footer';
 import { Header } from '../layout/header/Header';
 
+import { Offline } from '../utils/Error/Offline';
 import { Loading } from '../utils/Loading';
 import { ErrorComponent } from '../utils/Error/Error';
 
 import { useFetchUser } from '../useFetchUser';
 
 export const App = () => {
+	const [isOnline, setIsOnline] = useState(true);
 	const { user, error, isLoading } = useFetchUser();
 
 	const isError =
 		error &&
 		(error.cause instanceof Error ||
 			(error.cause instanceof Response && error.cause.status !== 401));
+
+	useEffect(() => {
+		window.addEventListener('offline', () => {
+			setIsOnline(false);
+		});
+		window.addEventListener('online', () => {
+			setIsOnline(true);
+		});
+	}, []);
 
 	return (
 		<div className={styles.app}>
@@ -38,7 +50,9 @@ export const App = () => {
 						<Header />
 					</div>
 					<div className={styles.container}>
-						<Outlet />
+						<main className={styles.main}>
+							{isOnline ? <Outlet /> : <Offline />}
+						</main>
 						<Footer />
 					</div>
 				</>
