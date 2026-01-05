@@ -10,6 +10,7 @@ import { Header } from '../layout/header/Header';
 import { Offline } from '../utils/Error/Offline';
 import { Loading } from '../utils/Loading';
 import { ErrorComponent } from '../utils/Error/Error';
+import { AppProvider } from './AppProvider';
 
 import { useFetchUser } from '../useFetchUser';
 
@@ -37,31 +38,34 @@ export const App = () => {
 		}
 	}, [user]);
 	return (
-		<div className={styles.app}>
-			<ScrollRestoration getKey={location => location.key} />
-			{isError ? (
-				<ErrorComponent />
-			) : user ? (
-				<div className={styles.loading}>
-					<Loading text="Redirecting to home page..." />
-				</div>
-			) : isLoading ? (
-				<div className={styles.loading}>
-					<Loading text="Loading..." />
-				</div>
-			) : (
-				<>
-					<div className={styles['header-bar']}>
-						<Header />
+		<AppProvider>
+			<div className={styles.app}>
+				<ScrollRestoration getKey={location => location.key} />
+				{isError ? (
+					<ErrorComponent />
+				) : user ? (
+					<div className={styles.loading}>
+						<Loading text="Redirecting to home page..." />
 					</div>
-					<div className={styles.container}>
-						<main className={styles.main}>
-							{isOnline ? <Outlet /> : <Offline />}
-						</main>
-						<Footer />
+				) : isLoading ? (
+					<div className={styles.loading}>
+						<Loading text="Loading..." />
 					</div>
-				</>
-			)}
-		</div>
+				) : (
+					<>
+						<div className={styles['header-bar']}>
+							<Header />
+						</div>
+
+						<div className={styles.container}>
+							<main className={styles.main}>
+								{isOnline ? <Outlet /> : <Offline />}
+							</main>
+							<Footer />
+						</div>
+					</>
+				)}
+			</div>
+		</AppProvider>
 	);
 };
