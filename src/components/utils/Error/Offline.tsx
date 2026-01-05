@@ -15,8 +15,8 @@ export const Offline = () => {
 				<p>Please check your connection.</p>
 			</div>
 
-			<Link to="/" className={styles.link}>
-				Back to Home Page
+			<Link to="/sign-in" className={styles.link}>
+				Back to Sign In Page
 			</Link>
 		</div>
 	);
