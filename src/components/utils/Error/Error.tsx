@@ -5,11 +5,7 @@ import { Link, useLocation } from 'react-router';
 import styles from './Error.module.css';
 import imageStyles from '../../../styles/image.module.css';
 
-export const ErrorComponent = ({
-	onReGetUser,
-}: {
-	onReGetUser?: () => void;
-}) => {
+export const ErrorComponent = () => {
 	const { state } = useLocation();
 
 	return (
@@ -25,11 +21,7 @@ export const ErrorComponent = ({
 				</Link>
 			)}
 
-			<Link
-				to="/sign-in"
-				className={styles.link}
-				onClick={() => onReGetUser && onReGetUser()}
-			>
+			<Link to="/sign-in" className={styles.link}>
 				Back to Sign In Page
 			</Link>
 		</div>
