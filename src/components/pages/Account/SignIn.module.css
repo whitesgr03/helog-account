@@ -1,5 +1,6 @@
 .account {
 	display: flex;
+	position: relative;
 	flex: 1 1 100%;
 	justify-content: center;
 }
@@ -13,8 +14,19 @@
 	max-width: 500px;
 }
 
+.wrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .title {
 	color: var(--light-scheme-color);
+}
+
+.email {
+	font-style: italic;
+	font-weight: 700;
 }
 
 @media (width >= 440px) {
