@@ -5,6 +5,7 @@ import { App } from './components/pages/App';
 import { SignIn } from './components/pages/Account/SignIn';
 import { SignUp } from './components/pages/Account/SignUp';
 import { AccountCreate } from './components/pages/Account/AccountCreate';
+import { ErrorComponent } from './components/utils/Error/Error';
 import { NotFound } from './components/utils/Error/NotFound';
 
 export const Router = () => (
@@ -33,6 +34,10 @@ export const Router = () => (
 					{
 						path: '*',
 						element: <NotFound />,
+					},
+					{
+						path: 'error',
+						element: <ErrorComponent />,
 					},
 				],
 			},
