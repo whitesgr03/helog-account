@@ -13,6 +13,7 @@ import { login } from '../../../lib/handleAccount';
 import { verifySchema } from '../../../lib/verifySchema';
 import { useAppDataAPI } from '../AppContext';
 import { Loading } from '../../utils/Loading';
+import { RequestResetPasswordModel } from './RequestResetPasswordModel';
 
 const schema = object({
 	email: string()
@@ -39,7 +40,7 @@ export const SignIn = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isShowPassword, setIsShowPassword] = useState(false);
 	const timer = useRef<NodeJS.Timeout>(null);
-	const { onAlert } = useAppDataAPI();
+	const { onModal, onAlert } = useAppDataAPI();
 	const navigate = useNavigate();
 
 	const handleLogin = async () => {
@@ -110,6 +111,13 @@ export const SignIn = () => {
 	const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setIsShowPassword(e.target.checked);
 	};
+
+	const handleShowResetPasswordModel = () =>
+		onModal({
+			component: <RequestResetPasswordModel />,
+			clickToClose: true,
+		});
+
 	useEffect(() => {
 		if (debounce) {
 			timer.current = setTimeout(async () => {
@@ -179,6 +187,13 @@ export const SignIn = () => {
 									/>
 									Show Password
 								</label>
+								<button
+									type="button"
+									onClick={handleShowResetPasswordModel}
+									className={formStyles.link}
+								>
+									Forget Password?
+								</button>
 							</div>
 							<div
 								className={`${formStyles['error-message']} ${inputErrors.password ? formStyles['error-message-active'] : ''}`}
