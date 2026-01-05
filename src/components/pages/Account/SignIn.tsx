@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { string, object, type InferType } from 'yup';
 import isEmpty from 'lodash.isempty';
 import { formatDistanceStrict } from 'date-fns';
@@ -194,6 +194,12 @@ export const SignIn = () => {
 						</button>
 					</form>
 					<Federation onLoading={() => setIsLoading(true)} />
+					<div className={formStyles['link-wrap']}>
+						<p>New to Helog?</p>
+						<Link to="/sign-up" className={formStyles.link}>
+							Create an account
+						</Link>
+					</div>
 				</div>
 			</div>
 		</div>
