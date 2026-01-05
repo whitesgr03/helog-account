@@ -10,6 +10,8 @@ import { Header } from '../layout/header/Header';
 import { Offline } from '../utils/Error/Offline';
 import { Loading } from '../utils/Loading';
 import { ErrorComponent } from '../utils/Error/Error';
+import { Modal } from './Modal';
+import { Alert } from './Alert';
 import { AppProvider } from './AppProvider';
 
 import { useFetchUser } from '../useFetchUser';
@@ -24,6 +26,11 @@ export const App = () => {
 			(error.cause instanceof Response && error.cause.status !== 401));
 
 	useEffect(() => {
+		// Remove hash property (#_=_) from facebook login flow
+		if (window.location.hash === '#_=_') {
+			window.history.replaceState(null, '', window.location.pathname);
+		}
+
 		window.addEventListener('offline', () => {
 			setIsOnline(false);
 		});
@@ -55,10 +62,12 @@ export const App = () => {
 					<>
 						<div className={styles['header-bar']}>
 							<Header />
+							<Alert />
 						</div>
 
 						<div className={styles.container}>
 							<main className={styles.main}>
+								<Modal />
 								{isOnline ? <Outlet /> : <Offline />}
 							</main>
 							<Footer />

@@ -1,0 +1,88 @@
+.modal {
+	display: flex;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	z-index: 3;
+	backdrop-filter: blur(4px);
+	animation: fade-in 0.3s forwards;
+	inset: 0;
+	background-color: rgb(var(--light-scheme-color-rgb) / 50%);
+	padding: 0 5%;
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.modal-wrap {
+	display: flex;
+	position: relative;
+	flex: 1 1 100%;
+	border: 2px solid var(--light-scheme-color);
+	border-radius: 8px;
+	background-color: var(--light-scheme-layout-bgc);
+	padding: 40px 20px;
+	max-height: 75%;
+	overflow: hidden;
+	color: var(--light-scheme-color);
+}
+
+.container {
+	flex: 1 1 100%;
+	overflow: hidden;
+}
+
+/* Dark scheme classes */
+:global(.dark) .modal-wrap {
+	border: 2px solid var(--dark-scheme-color);
+	background-color: var(--dark-scheme-input-bgc);
+	color: var(--dark-scheme-color);
+}
+
+:global(.dark) .modal-input::placeholder {
+	color: rgb(var(--dark-scheme-color-rgb) / 80%);
+}
+
+@media (width >= 440px) {
+	.modal-wrap {
+		max-width: 90%;
+	}
+}
+
+@media (width >= 500px) {
+	.modal-wrap {
+		margin: 0 auto;
+		max-width: 80%;
+	}
+}
+
+@media (width >= 700px) {
+	.modal-wrap {
+		max-width: 60%;
+	}
+}
+
+@media (width >= 900px) {
+	.modal-wrap {
+		max-width: 50%;
+	}
+}
+
+@media (width >= 1200px) {
+	.modal-wrap {
+		max-width: 40%;
+	}
+}
+
+@media (width >= 1500px) {
+	.modal-wrap {
+		max-width: 30%;
+	}
+}

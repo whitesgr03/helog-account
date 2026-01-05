@@ -1,0 +1,46 @@
+.alert {
+	display: flex;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	transform: translateY(-100%);
+	z-index: -1;
+	transition: transform 0.2s ease-out;
+	cursor: pointer;
+	background-color: var(--light-scheme-highlight);
+	padding: 0 5%;
+	height: var(--icon-size-mobile);
+	overflow: hidden;
+	color: var(--dark-scheme-color);
+}
+
+.alert.active {
+	transform: translateY(0%);
+	transition: transform 0.3s ease;
+}
+
+.alert p {
+	overflow-y: scroll;
+	white-space: nowrap;
+}
+
+.alert p::-webkit-scrollbar {
+	display: none;
+}
+
+.alert.error {
+	background-color: var(--light-scheme-error);
+}
+
+/* Dark scheme classes */
+:global(.dark) .alert {
+	background-color: var(--dark-scheme-highlight);
+	color: var(--light-scheme-color);
+}
+
+:global(.dark) .alert.error {
+	background-color: var(--dark-scheme-error);
+}
