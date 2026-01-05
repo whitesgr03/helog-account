@@ -3,6 +3,7 @@ import { RouterProvider } from 'react-router/dom';
 
 import { App } from './components/pages/App';
 import { SignIn } from './components/pages/Account/SignIn';
+import { SignUp } from './components/pages/Account/SignUp';
 
 export const Router = () => (
 	<RouterProvider
@@ -18,6 +19,10 @@ export const Router = () => (
 					{
 						path: 'sign-in',
 						element: <SignIn />,
+					},
+					{
+						path: 'sign-up',
+						element: <SignUp />,
 					},
 				],
 			},
