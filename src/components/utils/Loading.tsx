@@ -18,7 +18,9 @@ export const Loading = ({ text, dark, light, shadow, blur }: Props) => {
 			} ${shadow ? styles.shadow : ''} ${blur ? styles.blur : ''}`}
 		>
 			{text}
-			<span className={`${imageStyles.icon} ${styles.load}`} />
+			<span
+				className={`${imageStyles.icon} ${imageStyles['mobile-size']}  ${styles.load}`}
+			/>
 		</div>
 	);
 };
