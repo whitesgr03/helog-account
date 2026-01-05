@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router/dom';
 import { App } from './components/pages/App';
 import { SignIn } from './components/pages/Account/SignIn';
 import { SignUp } from './components/pages/Account/SignUp';
+import { AccountCreate } from './components/pages/Account/AccountCreate';
 
 export const Router = () => (
 	<RouterProvider
@@ -23,6 +24,10 @@ export const Router = () => (
 					{
 						path: 'sign-up',
 						element: <SignUp />,
+					},
+					{
+						path: 'account',
+						element: <AccountCreate />,
 					},
 				],
 			},
