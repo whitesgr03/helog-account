@@ -15,13 +15,13 @@ import { useAppDataAPI } from '../AppContext';
 import { Loading } from '../../utils/Loading';
 
 const schema = object({
-	displayName: string()
+	username: string()
 		.trim()
-		.required('The display name is required.')
-		.max(30, 'The display name length must be less then 30.')
+		.required('The username is required.')
+		.max(30, 'The username length must be less then 30.')
 		.matches(
 			/^[a-zA-Z]\w*$/,
-			'The display name must begin with alphabet and include alphanumeric or underscore.',
+			'The username must begin with alphabet and include alphanumeric or underscore.',
 		),
 	email: string()
 		.required('The email is required.')
@@ -45,7 +45,7 @@ const schema = object({
 });
 
 const defaultFormFields = {
-	displayName: '',
+	username: '',
 	email: '',
 	password: '',
 	confirmPassword: '',
@@ -54,7 +54,7 @@ const defaultFormFields = {
 export type SignUpSchema = InferType<typeof schema>;
 
 interface inputErrors {
-	displayName?: string;
+	username?: string;
 	email?: string;
 	password?: string;
 	confirmPassword?: string;
@@ -177,25 +177,25 @@ export const SignUp = () => {
 				<div className={formStyles.container}>
 					<form className={formStyles.form} onSubmit={handleSubmit}>
 						<div>
-							<label className={formStyles.label} htmlFor="displayName">
-								Display Name
+							<label className={formStyles.label} htmlFor="username">
+								Username
 								<input
-									className={`${formStyles.input} ${inputErrors?.displayName ? formStyles['input-error'] : ''}`}
-									id="displayName"
+									className={`${formStyles.input} ${inputErrors?.username ? formStyles['input-error'] : ''}`}
+									id="username"
 									type="text"
-									name="displayName"
-									title="The display name is required."
-									value={formFields.displayName}
+									name="username"
+									title="The username is required."
+									value={formFields.username}
 									onChange={handleChange}
 									autoFocus={true}
 								/>
 							</label>
 							<div
-								className={`${formStyles['error-message']} ${inputErrors.displayName ? formStyles['error-message-active'] : ''}`}
+								className={`${formStyles['error-message']} ${inputErrors.username ? formStyles['error-message-active'] : ''}`}
 							>
 								<span className={`${formStyles.icon} ${formStyles.alert}`} />
 								<p className={formStyles.message}>
-									{inputErrors.displayName ?? 'Message Placeholder'}
+									{inputErrors.username ?? 'Message Placeholder'}
 								</p>
 							</div>
 						</div>
