@@ -78,7 +78,6 @@ export const SignUp = () => {
 		try {
 			const result = await requestRegister(controller.signal, formFields);
 			if (result.success) {
-				setInputErrors({});
 				setFormFields(defaultFormFields);
 				setIsShowPassword(false);
 				setDebounce(false);
