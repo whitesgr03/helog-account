@@ -89,6 +89,9 @@ export const RequestResetPasswordModel = () => {
 					},
 				]);
 			} else {
+				onModal({
+					component: null,
+				});
 				navigate('/error');
 			}
 		} finally {
