@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Header component > should match snapshot 1`] = `
+<DocumentFragment>
+  <header
+    class="_header_11d07d"
+  >
+    <a
+      class="_link_11d07d"
+      href="http://localhost:9001"
+    >
+      <h1
+        class="_logo_11d07d"
+      >
+        HeLog
+      </h1>
+    </a>
+  </header>
+</DocumentFragment>
+`;

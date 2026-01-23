@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Footer component > should match snapshot 1`] = `
+<DocumentFragment>
+  <footer
+    class="_footer_734720"
+  >
+    <div
+      class="_container_734720"
+    >
+      <a
+        class="_link_734720"
+        href="https://github.com/whitesgr03/helog"
+      >
+        <span
+          class="_icon_3ab4a4 _github_734720"
+        />
+      </a>
+      <address>
+        <a
+          class="_link_734720"
+          href="mailto:whitesgr03@gmail.com"
+        >
+          <span
+            class="_icon_3ab4a4 _email_734720"
+          />
+          <em
+            class="_emphasis_734720"
+          >
+            whitesgr03@gmail.com
+          </em>
+        </a>
+      </address>
+    </div>
+    <p>
+      © 2025 Designed & coded by Weiss Bai
+    </p>
+  </footer>
+</DocumentFragment>
+`;
