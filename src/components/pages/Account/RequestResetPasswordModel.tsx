@@ -48,7 +48,7 @@ export const RequestResetPasswordModel = () => {
 	const handleRequestResetPassword = async () => {
 		const controller = new AbortController();
 		const { signal } = controller;
-
+		setIsLoading(true);
 		try {
 			const response = await requestResetPassword(signal, formFields);
 			if (response.data.success) {
@@ -91,6 +91,8 @@ export const RequestResetPasswordModel = () => {
 			} else {
 				navigate('/error');
 			}
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
