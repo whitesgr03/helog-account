@@ -91,10 +91,10 @@ export const ResetPasswordModel = ({
 					clickToClose: true,
 				});
 			} else {
-				if (response.status === '400') {
+				if (response.status === 400) {
 					setInputErrors(data.fields);
 					setDebounce(true);
-				} else if (response.status === '401') {
+				} else if (response.status === 401) {
 					onModal({
 						component: idleAlertComponent,
 						clickToClose: true,
