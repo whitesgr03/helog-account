@@ -25,6 +25,7 @@ interface inputErrors {
 
 const schema = object({
 	password: string()
+		.required('Password is required.')
 		.min(
 			8,
 			'The password length must be greater than 8 characters or you can use passphrases less than 64 characters.',
@@ -59,7 +60,6 @@ export const ResetPasswordModel = ({
 	const [inputErrors, setInputErrors] = useState<inputErrors>({});
 	const [formFields, setFormFields] = useState({
 		password: '',
-		confirmPassword: '',
 	});
 	const [debounce, setDebounce] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
