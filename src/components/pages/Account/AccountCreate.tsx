@@ -5,7 +5,6 @@ import { formatDistanceStrict } from 'date-fns';
 
 import signInStyles from './SignIn.module.css';
 import modelStyles from '../../../styles/model.module.css';
-import buttonStyles from '../../../styles/button.module.css';
 
 import { useAppDataAPI } from '../AppContext';
 import { Loading } from '../../utils/Loading';
@@ -46,13 +45,6 @@ export const AccountCreate = () => {
 										already in use. Please try registering again using a new
 										link.
 									</p>
-									<button
-										className={`${buttonStyles.content} ${buttonStyles.success}`}
-										data-close-model
-										onClick={() => onModal({ component: null })}
-									>
-										Cancel
-									</button>
 								</div>
 							),
 							clickToClose: true,
