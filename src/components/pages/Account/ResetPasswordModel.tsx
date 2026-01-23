@@ -140,18 +140,23 @@ export const ResetPasswordModel = ({
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!isLoading) {
+		if (isLoading) return;
+
+		if (!debounce) {
 			const errors = await verifySchema({ schema, formFields });
 
 			if (errors) {
 				setInputErrors(errors);
-				setDebounce(false);
-			} else {
-				setInputErrors({});
-				setIsLoading(true);
-				await handleResetPassword();
-				setIsLoading(false);
+				setDebounce(true);
+				return;
 			}
+
+			await handleResetPassword();
+			return;
+		}
+
+		if (isEmpty(inputErrors)) {
+			await handleResetPassword();
 		}
 	};
 
@@ -162,8 +167,6 @@ export const ResetPasswordModel = ({
 			[name]: value,
 		};
 		setFormFields(fields);
-
-		if (!isEmpty(inputErrors)) setDebounce(true);
 	};
 
 	const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -125,18 +125,23 @@ export const SignUp = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!isLoading) {
+		if (isLoading) return;
+
+		if (!debounce) {
 			const errors = await verifySchema({ schema, formFields });
 
 			if (errors) {
 				setInputErrors(errors);
-				setDebounce(false);
-			} else {
-				setInputErrors({});
-				setIsLoading(true);
-				await handleRequestRegister();
-				setIsLoading(false);
+				setDebounce(true);
+				return;
 			}
+
+			await handleRequestRegister();
+			return;
+		}
+
+		if (isEmpty(inputErrors)) {
+			await handleRequestRegister();
 		}
 	};
 
@@ -147,7 +152,6 @@ export const SignUp = () => {
 			[name]: value,
 		};
 		setFormFields(fields);
-		if (!isEmpty(inputErrors)) setDebounce(true);
 	};
 
 	const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,7 +162,6 @@ export const SignUp = () => {
 		if (debounce) {
 			timer.current = setTimeout(async () => {
 				const errors = await verifySchema({ schema, formFields });
-
 				if (errors) {
 					setInputErrors(errors);
 				} else {

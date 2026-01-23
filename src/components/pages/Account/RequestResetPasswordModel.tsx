@@ -96,18 +96,23 @@ export const RequestResetPasswordModel = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!isLoading) {
+		if (isLoading) return;
+
+		if (!debounce) {
 			const errors = await verifySchema({ schema, formFields });
 
 			if (errors) {
 				setInputErrors(errors);
-				setDebounce(false);
-			} else {
-				setInputErrors({});
-				setIsLoading(true);
-				await handleRequestResetPassword();
-				setIsLoading(false);
+				setDebounce(true);
+				return;
 			}
+
+			await handleRequestResetPassword();
+			return;
+		}
+
+		if (isEmpty(inputErrors)) {
+			await handleRequestResetPassword();
 		}
 	};
 
@@ -118,8 +123,6 @@ export const RequestResetPasswordModel = () => {
 			[name]: value,
 		};
 		setFormFields(fields);
-
-		if (!isEmpty(inputErrors)) setDebounce(true);
 	};
 
 	useEffect(() => {

@@ -84,16 +84,23 @@ export const SignIn = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!isLoading) {
+		if (isLoading) return;
+
+		if (!debounce) {
 			const errors = await verifySchema({ schema, formFields });
 
 			if (errors) {
 				setInputErrors(errors);
-				setDebounce(false);
-			} else {
-				setInputErrors({});
-				await handleLogin();
+				setDebounce(true);
+				return;
 			}
+
+			await handleLogin();
+			return;
+		}
+
+		if (isEmpty(inputErrors)) {
+			await handleLogin();
 		}
 	};
 
@@ -104,8 +111,6 @@ export const SignIn = () => {
 			[name]: value,
 		};
 		setFormFields(fields);
-
-		if (!isEmpty(inputErrors)) setDebounce(true);
 	};
 
 	const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
