@@ -2,7 +2,7 @@ import { handleFetch } from './handleFetch';
 import Cookies from 'js-cookie';
 import { type SignUpSchema } from '../components/pages/Account/SignUp';
 import { type SignInSchema } from '../components/pages/Account/SignIn';
-import { type RequestResetPasswordModelSchema } from './../components/pages/Account/RequestResetPasswordModel';
+import { type RequestResetPasswordModalSchema } from '../components/pages/Account/RequestResetPasswordModal';
 
 const URL = `${import.meta.env.VITE_RESOURCE_URL}/account`;
 
@@ -55,7 +55,7 @@ export const register = async (
 
 export const requestResetPassword = async (
 	signal: AbortSignal,
-	formFields: RequestResetPasswordModelSchema,
+	formFields: RequestResetPasswordModalSchema,
 ) => {
 	const options: RequestInit = {
 		method: 'POST',
