@@ -22,121 +22,82 @@ export const VerificationCodeModel = ({
 	email,
 	codeExpireAfter,
 }: PropTypes) => {
-	const [code, setCode] = useState(['', '', '', '', '', '']);
-	const [isLoading, setIsLoading] = useState(false);
+	const [code, setCode] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	const [failCount, setFailCount] = useState(0);
 	const { onModal } = useAppDataAPI();
 	const timer = useRef<NodeJS.Timeout>(null);
 	const navigate = useNavigate();
 
-	const inputRefs = [
-		useRef<HTMLInputElement>(null),
-		useRef<HTMLInputElement>(null),
-		useRef<HTMLInputElement>(null),
-		useRef<HTMLInputElement>(null),
-		useRef<HTMLInputElement>(null),
-		useRef<HTMLInputElement>(null),
-	];
+	const handleVerifyCode = async () => {
+		if (failCount >= 3) {
+			onModal({
+				component: (
+					<div className={styles.model}>
+						<h3 className={styles.title}>Verify code failed</h3>
+						<p className={styles.content}>
+							You have entered an incorrect verification code too many times.
+							Please try resetting password again using a new code.
+						</p>
+					</div>
+				),
+				clickToClose: true,
+			});
+			return;
+		}
 
-	const handleVerifyCode = async (newCode: string[]) => {
-		if (!isLoading) {
-			if (failCount >= 3) {
+		setIsLoading(true);
+		const controller = new AbortController();
+		try {
+			const response = await verifyCode(controller.signal, code, email);
+
+			if (response.data.success) {
+				const sessionExpireAfter = Number(response.headers.get('Expire-After'));
+
 				onModal({
 					component: (
-						<div className={styles.model}>
-							<h3 className={styles.title}>Verify code failed</h3>
-							<p className={styles.content}>
-								You have entered an incorrect verification code too many times.
-								Please try resetting password again using a new code.
-							</p>
-						</div>
+						<ResetPasswordModel
+							email={email}
+							sessionExpireAfter={sessionExpireAfter}
+						/>
 					),
-					clickToClose: true,
+					clickToClose: false,
 				});
 			} else {
-				setIsLoading(true);
-				const controller = new AbortController();
-				try {
-					const response = await verifyCode(
-						controller.signal,
-						newCode.join(''),
-						email,
-					);
-
-					if (response.data.success) {
-						const sessionExpireAfter = Number(
-							response.headers.get('Expire-After'),
-						);
-
-						onModal({
-							component: (
-								<ResetPasswordModel
-									email={email}
-									sessionExpireAfter={sessionExpireAfter}
-								/>
-							),
-							clickToClose: false,
-						});
-					} else {
-						setErrorMessage('Code is invalid.');
-						setFailCount(failCount + 1);
-					}
-				} catch {
-					navigate('/error');
-					onModal({
-						component: null,
-					});
-				}
-				setIsLoading(false);
+				setErrorMessage('Code is invalid.');
+				setFailCount(failCount + 1);
 			}
+		} catch {
+			navigate('/error');
+			onModal({
+				component: null,
+			});
 		}
+		setIsLoading(false);
 	};
 
 	const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { id, value } = e.currentTarget;
+		if (isLoading) return;
 
-		if (await number().integer().isValid(+value)) {
-			if (value !== '' && +id !== code.length - 1) {
-				const nextInputElement = inputRefs[+id + 1].current;
-				nextInputElement?.focus();
-			}
-			const newCode = [...code];
-			newCode[+id] = value;
-			setCode(newCode);
+		const { value } = e.currentTarget;
 
-			if (newCode.join('').length === 6) {
-				await handleVerifyCode(newCode);
-			}
+		if (!(await number().integer().min(0).max(999999).isValid(+value.trim()))) {
+			setErrorMessage('Code must be 6-digit numbers.');
+			return;
 		}
-	};
-	const handlePaste = async (e: React.ClipboardEvent<HTMLInputElement>) => {
-		const pasteText = e.clipboardData.getData('text');
 
-		if (await number().min(100000).max(999999).isValid(+pasteText)) {
-			const newCode = pasteText.split('');
-			setCode(newCode);
+		setCode(value);
+		setErrorMessage('');
 
-			const lastInputElement = inputRefs[inputRefs.length - 1].current;
-			lastInputElement?.focus();
-
-			await handleVerifyCode(newCode);
-		}
-	};
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		const { key } = e;
-
-		if (key === 'Backspace' || key === 'Delete') {
-			const { id, value } = e.currentTarget;
-			if (value === '' && +id - 1 >= 0) {
-				const previousInputElement = inputRefs[+id - 1].current;
-				previousInputElement?.focus();
-			}
+		if (value.length === 6) {
+			e.target.blur();
+			await handleVerifyCode();
 		}
 	};
 
 	useEffect(() => {
-		timer.current = setTimeout(async () => {
+		timer.current = setTimeout(() => {
 			onModal({
 				component: (
 					<div className={modelStyles.model}>
@@ -160,33 +121,29 @@ export const VerificationCodeModel = ({
 			<div className={modelStyles.model}>
 				<h3 className={modelStyles.title}>Enter your validation code</h3>
 				<p className={modelStyles.content}>
-					If your email address:<span className={styles.email}> {email} </span>
+					If your email address:
+					<span className={styles.email}> {email} </span>
 					is registered, we will send a validation code to that email address,
 					please enter the 6-digit code to reset your password.
 				</p>
-
-				<div className={styles['code-wrap']}>
-					{code.map((item, index) => (
+				<div>
+					<label className={formStyles.label} htmlFor="code">
+						Code
 						<input
-							key={index}
-							id={`${index}`}
-							ref={inputRefs[index]}
-							className={styles.input}
+							className={`${modelStyles.input} ${errorMessage !== '' ? formStyles['input-error'] : ''}`}
+							id="code"
 							type="text"
-							autoFocus={index === 0}
-							value={item}
-							maxLength={1}
-							disabled={isLoading}
-							title="Enter the 6-digit verify code"
+							name="code"
+							title="Enter the 6-digit verify code."
+							value={code}
 							onChange={handleChange}
-							onPaste={handlePaste}
-							onKeyDown={handleKeyDown}
 							spellCheck="false"
 							autoCapitalize="off"
 							autoCorrect="off"
 							autoComplete="off"
+							autoFocus={true}
 						/>
-					))}
+					</label>
 				</div>
 				<div className={styles['model-bottom']}>
 					<ResendVerificationCodeButton email={email} />
@@ -194,7 +151,9 @@ export const VerificationCodeModel = ({
 						className={`${styles.error} ${formStyles['error-message']} ${errorMessage ? formStyles['error-message-active'] : ''}`}
 					>
 						<span className={`${formStyles.icon} ${formStyles.alert}`} />
-						<p className={formStyles.message}>{errorMessage}</p>
+						<p className={formStyles.message} data-testid="errorMessage">
+							{errorMessage}
+						</p>
 					</div>
 				</div>
 			</div>
