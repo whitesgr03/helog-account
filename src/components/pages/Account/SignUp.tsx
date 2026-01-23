@@ -28,6 +28,7 @@ const schema = object({
 		.lowercase()
 		.email('The email address must be in the correct format.'),
 	password: string()
+		.required('The password is required.')
 		.min(
 			8,
 			'The password length must be greater than 8 characters or you can use passphrases less than 64 characters.',
