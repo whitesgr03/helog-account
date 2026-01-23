@@ -77,6 +77,7 @@ export const SignIn = () => {
 			} else {
 				navigate('/error');
 			}
+		} finally {
 			setIsLoading(false);
 		}
 	};
