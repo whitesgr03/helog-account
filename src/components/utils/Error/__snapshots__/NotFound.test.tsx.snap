@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NotFound component > should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="_error_574b05"
+  >
+    <span
+      class="_icon_3ab4a4 _alert_574b05"
+    />
+    <h2>
+      Page Not Found
+    </h2>
+    <div
+      class="_message_574b05"
+    >
+      <p>
+        Our apologies, there has been an error.
+      </p>
+      <p>
+        The page you are looking for could not be found.
+      </p>
+      <p>
+        You may surf over to our other pages.
+      </p>
+    </div>
+    <a
+      class="_link_574b05"
+      data-discover="true"
+      href="/sign-in"
+    >
+      Back to Sign In Page
+    </a>
+  </div>
+</DocumentFragment>
+`;
