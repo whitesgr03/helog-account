@@ -20,27 +20,31 @@ interface Props {
 export const ResendVerificationCodeButton = ({ email }: Props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [timeRemaining, setTimeRemaining] = useState(10);
-	const [countdownStarted, setCountdownStarted] = useState(false);
-	const [countdownTime, setCountdownTime] = useState(
-		() => Date.now() + 10 * 1000,
-	);
 	const { onModal, onAlert } = useAppDataAPI();
 	const navigate = useNavigate();
 
 	const handleRequestVerificationCode = async () => {
-		if (!countdownStarted) {
+		if (timeRemaining <= 0) {
 			const controller = new AbortController();
+			setIsLoading(true);
 			try {
-				setIsLoading(true);
-
 				const result = await requestVerificationCode(controller.signal, email);
-
 				setIsLoading(false);
 				if (result.success) {
-					setCountdownTime(Date.now() + 30 * 1000);
-					setCountdownStarted(true);
-					setTimeRemaining(30);
+					const countdown = 30;
+					const startTime = Date.now();
 
+					setTimeRemaining(countdown);
+					const timer = setInterval(() => {
+						const currentTime = Date.now();
+						const diff =
+							countdown - Math.trunc((currentTime - startTime) / 1000);
+						setTimeRemaining(diff);
+
+						if (diff <= 0) {
+							clearInterval(timer);
+						}
+					}, 1000);
 					onAlert([
 						{
 							message: `The new verification code is send to your email.`,
@@ -82,21 +86,16 @@ export const ResendVerificationCodeButton = ({ email }: Props) => {
 	};
 
 	useEffect(() => {
-		if (countdownStarted) {
-			const countdownTimer = setInterval(() => {
-				const currentTime = Date.now();
-
-				const remainingTime = countdownTime - currentTime;
-				setTimeRemaining(new Date(remainingTime).getSeconds() + 1);
-
-				if (remainingTime <= 0) {
-					clearInterval(countdownTimer as NodeJS.Timeout);
-					setCountdownStarted(false);
-				}
-			}, 1000);
-			return () => clearTimeout(countdownTimer as NodeJS.Timeout);
-		}
-	}, [countdownStarted, countdownTime]);
+		const countdown = 10;
+		const startTime = Date.now();
+		const timer = setInterval(() => {
+			const currentTime = Date.now();
+			const diff = countdown - Math.trunc((currentTime - startTime) / 1000);
+			setTimeRemaining(diff);
+			if (diff <= 0) clearInterval(timer);
+		}, 1000);
+		return () => clearInterval(timer as NodeJS.Timeout);
+	}, []);
 
 	return (
 		<>
@@ -112,7 +111,7 @@ export const ResendVerificationCodeButton = ({ email }: Props) => {
 					className={`${styles.resend} ${formStyles.link}`}
 					onClick={handleRequestVerificationCode}
 				>
-					Resend code{countdownStarted ? ` (${timeRemaining}s)` : ''}
+					Resend code{timeRemaining > 0 && ` (${timeRemaining}s)`}
 				</button>
 			)}
 		</>
