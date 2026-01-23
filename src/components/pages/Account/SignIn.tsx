@@ -54,7 +54,7 @@ export const SignIn = () => {
 				window.location.assign(`${import.meta.env.VITE_HELOG_URL}`);
 			} else {
 				setInputErrors(result.fields);
-				setIsLoading(false);
+				setDebounce(true);
 			}
 		} catch (error) {
 			if (

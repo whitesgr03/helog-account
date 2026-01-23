@@ -95,6 +95,7 @@ export const SignUp = () => {
 				});
 			} else {
 				setInputErrors(result.fields);
+				setDebounce(true);
 			}
 		} catch (error) {
 			if (

@@ -51,9 +51,9 @@ export const RequestResetPasswordModel = () => {
 
 		try {
 			const response = await requestResetPassword(signal, formFields);
-
 			if (response.data.success) {
 				const codeExpireAfter = Number(response.headers.get('Expire-After'));
+				setDebounce(false);
 				onModal({
 					component: (
 						<VerificationCodeModel
@@ -65,6 +65,7 @@ export const RequestResetPasswordModel = () => {
 				});
 			} else {
 				setInputErrors(response.data.fields);
+				setDebounce(true);
 			}
 		} catch (error) {
 			if (
