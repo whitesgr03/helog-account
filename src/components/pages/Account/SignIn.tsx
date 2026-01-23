@@ -25,13 +25,13 @@ const schema = object({
 
 export type SignInSchema = InferType<typeof schema>;
 
-interface inputErrors {
+export interface SignInInputErrors {
 	email?: string;
 	password?: string;
 }
 
 export const SignIn = () => {
-	const [inputErrors, setInputErrors] = useState<inputErrors>({});
+	const [inputErrors, setInputErrors] = useState<SignInInputErrors>({});
 	const [formFields, setFormFields] = useState({
 		email: '',
 		password: '',
@@ -128,7 +128,6 @@ export const SignIn = () => {
 		if (debounce) {
 			timer.current = setTimeout(async () => {
 				const errors = await verifySchema({ schema, formFields });
-
 				if (errors) {
 					setInputErrors(errors);
 				} else {
