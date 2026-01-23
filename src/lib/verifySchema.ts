@@ -1,20 +1,13 @@
 import { ValidationError, type AnyObject } from 'yup';
-import type { SignInSchema } from '../components/pages/Account/SignIn';
-import type { SignUpSchema } from '../components/pages/Account/SignUp';
-import type { RequestResetPasswordModelSchema } from './../components/pages/Account/RequestResetPasswordModel';
-import type { ResetPasswordModelSchema } from '../components/pages/Account/ResetPasswordModel';
+import type { SignInInputErrors } from '../components/pages/Account/SignIn';
 
 export const verifySchema = async ({
 	schema,
 	formFields,
 }: {
 	schema: AnyObject;
-	formFields:
-		| SignInSchema
-		| SignUpSchema
-		| RequestResetPasswordModelSchema
-		| ResetPasswordModelSchema;
-}) => {
+	formFields: AnyObject;
+}): Promise<false | SignInInputErrors> => {
 	try {
 		await schema.validate(formFields, {
 			abortEarly: false,
@@ -22,7 +15,7 @@ export const verifySchema = async ({
 		});
 	} catch (err) {
 		if (err instanceof ValidationError) {
-			const errors = err.inner.reduce(
+			const errors: SignInInputErrors = err.inner.reduce(
 				(obj, error) =>
 					error.path ? { ...obj, [error.path]: error.message } : obj,
 				{},
@@ -30,4 +23,5 @@ export const verifySchema = async ({
 			return errors;
 		}
 	}
+	return false;
 };
