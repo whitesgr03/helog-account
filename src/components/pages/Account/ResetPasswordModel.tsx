@@ -71,12 +71,10 @@ export const ResetPasswordModel = ({
 	const handleResetPassword = async () => {
 		const controller = new AbortController();
 		const { signal } = controller;
-
+		setIsLoading(true);
 		try {
 			const response = await resetPassword(signal, formFields.password, email);
-
 			const data = await response.json();
-
 			if (data.success) {
 				onModal({
 					component: (
@@ -134,6 +132,8 @@ export const ResetPasswordModel = ({
 					component: null,
 				});
 			}
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
