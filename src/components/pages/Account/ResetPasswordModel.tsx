@@ -93,6 +93,7 @@ export const ResetPasswordModel = ({
 			} else {
 				if (response.status === '400') {
 					setInputErrors(data.fields);
+					setDebounce(true);
 				} else if (response.status === '401') {
 					onModal({
 						component: idleAlertComponent,
