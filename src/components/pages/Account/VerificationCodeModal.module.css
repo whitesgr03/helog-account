@@ -20,7 +20,7 @@
 	text-align: center;
 }
 
-.model-bottom {
+.modal-bottom {
 	display: flex;
 	row-gap: 5px;
 	flex-direction: column;
@@ -45,7 +45,7 @@
 		font-size: 25px;
 	}
 
-	.model-bottom {
+	.modal-bottom {
 		flex-direction: row-reverse;
 		justify-content: space-between;
 	}

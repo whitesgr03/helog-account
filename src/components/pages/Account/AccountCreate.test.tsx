@@ -42,7 +42,7 @@ describe('SignIn component', () => {
 
 		expect(screen.getByText('Sign in component'));
 	});
-	it('should render a model and navigate to sign up page if the user registration failed', async () => {
+	it('should render a modal and navigate to sign up page if the user registration failed', async () => {
 		vi.mocked(register).mockResolvedValueOnce({ success: false });
 
 		const Stub = createRoutesStub([

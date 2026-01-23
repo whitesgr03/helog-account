@@ -5,20 +5,20 @@ import { useNavigate } from 'react-router';
 import { useAppDataAPI } from '../AppContext';
 
 import { Loading } from '../../utils/Loading';
-import { ResetPasswordModel } from './ResetPasswordModel';
+import { ResetPasswordModal } from './ResetPasswordModal';
 import { ResendVerificationCodeButton } from './ResendVerificationCodeButton';
 
 // Styles
-import styles from './verificationCodeModel.module.css';
+import styles from './verificationCodeModal.module.css';
 import formStyles from '../../../styles/form.module.css';
-import modelStyles from '../../../styles/model.module.css';
+import modalStyles from '../../../styles/modal.module.css';
 
 interface PropTypes {
 	email: string;
 	codeExpireAfter: number;
 }
 
-export const VerificationCodeModel = ({
+export const VerificationCodeModal = ({
 	email,
 	codeExpireAfter,
 }: PropTypes) => {
@@ -34,7 +34,7 @@ export const VerificationCodeModel = ({
 		if (failCount >= 3) {
 			onModal({
 				component: (
-					<div className={styles.model}>
+					<div className={styles.modal}>
 						<h3 className={styles.title}>Verify code failed</h3>
 						<p className={styles.content}>
 							You have entered an incorrect verification code too many times.
@@ -57,7 +57,7 @@ export const VerificationCodeModel = ({
 
 				onModal({
 					component: (
-						<ResetPasswordModel
+						<ResetPasswordModal
 							email={email}
 							sessionExpireAfter={sessionExpireAfter}
 						/>
@@ -100,9 +100,9 @@ export const VerificationCodeModel = ({
 		timer.current = setTimeout(() => {
 			onModal({
 				component: (
-					<div className={modelStyles.model}>
-						<h3 className={modelStyles.title}>Verification code expired</h3>
-						<p className={modelStyles.content}>
+					<div className={modalStyles.modal}>
+						<h3 className={modalStyles.title}>Verification code expired</h3>
+						<p className={modalStyles.content}>
 							The verification code is expired. Please try resetting password
 							again using a new code.
 						</p>
@@ -118,9 +118,9 @@ export const VerificationCodeModel = ({
 	return (
 		<>
 			{isLoading && <Loading text={'Verifying...'} shadow={true} blur={true} />}
-			<div className={modelStyles.model}>
-				<h3 className={modelStyles.title}>Enter your validation code</h3>
-				<p className={modelStyles.content}>
+			<div className={modalStyles.modal}>
+				<h3 className={modalStyles.title}>Enter your validation code</h3>
+				<p className={modalStyles.content}>
 					If your email address:
 					<span className={styles.email}> {email} </span>
 					is registered, we will send a validation code to that email address,
@@ -130,7 +130,7 @@ export const VerificationCodeModel = ({
 					<label className={formStyles.label} htmlFor="code">
 						Code
 						<input
-							className={`${modelStyles.input} ${errorMessage !== '' ? formStyles['input-error'] : ''}`}
+							className={`${modalStyles.input} ${errorMessage !== '' ? formStyles['input-error'] : ''}`}
 							id="code"
 							type="text"
 							name="code"
@@ -145,7 +145,7 @@ export const VerificationCodeModel = ({
 						/>
 					</label>
 				</div>
-				<div className={styles['model-bottom']}>
+				<div className={styles['modal-bottom']}>
 					<ResendVerificationCodeButton email={email} />
 					<div
 						className={`${styles.error} ${formStyles['error-message']} ${errorMessage ? formStyles['error-message-active'] : ''}`}

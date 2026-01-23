@@ -3,11 +3,12 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { string, object, type InferType } from 'yup';
 import isEmpty from 'lodash.isempty';
+import { requestResetPassword } from '../../../lib/handleAccount';
 import { formatDistanceStrict } from 'date-fns';
 
 // Styles
 import formStyles from '../../../styles/form.module.css';
-import modelStyles from '../../../styles/model.module.css';
+import modalStyles from '../../../styles/modal.module.css';
 import buttonStyles from '../../../styles/button.module.css';
 
 // Components
@@ -17,94 +18,54 @@ import { Loading } from '../../utils/Loading';
 import { useAppDataAPI } from '../AppContext';
 
 import { verifySchema } from '../../../lib/verifySchema';
-import { resetPassword } from '../../../lib/handleAccount';
+
+import { VerificationCodeModal } from './VerificationCodeModal';
 
 interface inputErrors {
-	password?: string;
+	email?: string;
 }
 
 const schema = object({
-	password: string()
-		.required('Password is required.')
-		.min(
-			8,
-			'The password length must be greater than 8 characters or you can use passphrases less than 64 characters.',
-		)
-		.max(
-			64,
-			'The password length must be greater than 8 characters or you can use passphrases less than 64 characters.',
-		),
+	email: string()
+		.trim()
+		.required('Email address is required.')
+		.email('The email address must be in the correct format.'),
 });
 
-export type ResetPasswordModelSchema = InferType<typeof schema>;
+export type RequestResetPasswordModalSchema = InferType<typeof schema>;
 
-interface PropTypes {
-	email: string;
-	sessionExpireAfter: number;
-}
-
-const idleAlertComponent = (
-	<div className={modelStyles.model}>
-		<h3 className={modelStyles.title}>Reset password idle timeout</h3>
-		<p className={modelStyles.content}>
-			You've idle on the reset password page for fifteen minutes. Please try
-			resetting password again.
-		</p>
-	</div>
-);
-
-export const ResetPasswordModel = ({
-	email,
-	sessionExpireAfter,
-}: PropTypes) => {
+export const RequestResetPasswordModal = () => {
 	const [inputErrors, setInputErrors] = useState<inputErrors>({});
 	const [formFields, setFormFields] = useState({
-		password: '',
+		email: '',
 	});
 	const [debounce, setDebounce] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [isShowPassword, setIsShowPassword] = useState(false);
 	const timer = useRef<NodeJS.Timeout>(null);
 	const { onModal, onAlert } = useAppDataAPI();
 	const navigate = useNavigate();
 
-	const handleResetPassword = async () => {
+	const handleRequestResetPassword = async () => {
 		const controller = new AbortController();
 		const { signal } = controller;
 		setIsLoading(true);
 		try {
-			const response = await resetPassword(signal, formFields.password, email);
-			const data = await response.json();
-			if (data.success) {
+			const response = await requestResetPassword(signal, formFields);
+			if (response.data.success) {
+				const codeExpireAfter = Number(response.headers.get('Expire-After'));
+				setDebounce(false);
 				onModal({
 					component: (
-						<div className={modelStyles.model}>
-							<h3 className={modelStyles.title}>
-								Reset password was successfully
-							</h3>
-							<p className={modelStyles.content}>
-								We have signed you out of all other devices. You can now log
-								back in with your new password.
-							</p>
-						</div>
+						<VerificationCodeModal
+							email={formFields.email}
+							codeExpireAfter={codeExpireAfter}
+						/>
 					),
 					clickToClose: true,
 				});
 			} else {
-				if (response.status === 400) {
-					setInputErrors(data.fields);
-					setDebounce(true);
-				} else if (response.status === 401) {
-					onModal({
-						component: idleAlertComponent,
-						clickToClose: true,
-					});
-				} else {
-					navigate('/error');
-					onModal({
-						component: null,
-					});
-				}
+				setInputErrors(response.data.fields);
+				setDebounce(true);
 			}
 		} catch (error) {
 			if (
@@ -128,10 +89,10 @@ export const ResetPasswordModel = ({
 					},
 				]);
 			} else {
-				navigate('/error');
 				onModal({
 					component: null,
 				});
+				navigate('/error');
 			}
 		} finally {
 			setIsLoading(false);
@@ -152,12 +113,12 @@ export const ResetPasswordModel = ({
 				return;
 			}
 
-			await handleResetPassword();
+			await handleRequestResetPassword();
 			return;
 		}
 
 		if (isEmpty(inputErrors)) {
-			await handleResetPassword();
+			await handleRequestResetPassword();
 		}
 	};
 
@@ -168,10 +129,6 @@ export const ResetPasswordModel = ({
 			[name]: value,
 		};
 		setFormFields(fields);
-	};
-
-	const handleShowPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setIsShowPassword(e.target.checked);
 	};
 
 	useEffect(() => {
@@ -189,56 +146,46 @@ export const ResetPasswordModel = ({
 		return () => clearTimeout(timer.current as NodeJS.Timeout);
 	}, [debounce, formFields]);
 
-	useEffect(() => {
-		timer.current = setTimeout(async () => {
-			onModal({
-				component: idleAlertComponent,
-				clickToClose: true,
-			});
-		}, sessionExpireAfter);
-		return () => clearTimeout(timer.current as NodeJS.Timeout);
-	}, [onModal, sessionExpireAfter]);
-
 	return (
 		<>
 			{isLoading && (
 				<Loading text={'Committing ...'} shadow={true} blur={true} />
 			)}
 			<form className={formStyles.form} onSubmit={handleSubmit}>
+				<h3 className={modalStyles.title}>
+					Getting back into your Helog account
+				</h3>
+				<p className={modalStyles.content}>
+					As a security precaution, resetting your password will automatically
+					log you out of all other devices.
+				</p>
 				<div>
-					<label className={formStyles.label} htmlFor="password">
-						New Password
+					<label className={formStyles.label} htmlFor="email">
+						Enter your Email
 						<input
-							className={`${modelStyles.input} ${inputErrors.password ? formStyles['input-error'] : ''}`}
-							id="password"
-							type={isShowPassword ? 'text' : 'password'}
-							name="password"
-							title="The password is required."
-							value={formFields.password}
+							className={`${modalStyles.input} ${inputErrors?.email ? formStyles['input-error'] : ''}`}
+							id="email"
+							type="text"
+							name="email"
+							title="The email is required and must be standard format."
+							value={formFields.email}
 							onChange={handleChange}
+							spellCheck="false"
+							autoCapitalize="off"
+							autoCorrect="off"
+							autoComplete="off"
+							autoFocus={true}
 						/>
-					</label>
-					<label className={formStyles['checkbox-label']}>
-						<input
-							className={formStyles.checkbox}
-							type="checkbox"
-							id="isShowPassword"
-							name="isShowPassword"
-							onChange={handleShowPassword}
-							checked={isShowPassword}
-						/>
-						Show Password
 					</label>
 					<div
-						className={`${formStyles['error-message']} ${inputErrors.password ? formStyles['error-message-active'] : ''}`}
+						className={`${formStyles['error-message']} ${inputErrors.email ? formStyles['error-message-active'] : ''}`}
 					>
 						<span className={`${formStyles.icon} ${formStyles.alert}`} />
 						<p className={formStyles.message}>
-							{inputErrors.password ?? 'Message Placeholder'}
+							{inputErrors.email ?? 'Message Placeholder'}
 						</p>
 					</div>
 				</div>
-
 				<button
 					className={`${buttonStyles.content} ${buttonStyles.success}`}
 					type="submit"

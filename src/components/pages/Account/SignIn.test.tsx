@@ -15,7 +15,7 @@ import { login } from '../../../lib/handleAccount';
 import { verifySchema } from '../../../lib/verifySchema';
 import { useAppDataAPI } from '../AppContext';
 import { Loading } from '../../utils/Loading';
-import { RequestResetPasswordModel } from './RequestResetPasswordModel';
+import { RequestResetPasswordModal } from './RequestResetPasswordModal';
 
 import isEmpty from 'lodash.isempty';
 import { formatDistanceStrict } from 'date-fns';
@@ -23,7 +23,7 @@ import { formatDistanceStrict } from 'date-fns';
 vi.mock('../../../lib/verifySchema', { spy: true });
 vi.mock('../../../lib/handleAccount');
 vi.mock('../../utils/Loading');
-vi.mock('./RequestResetPasswordModel');
+vi.mock('./RequestResetPasswordModal');
 vi.mock('../AppContext');
 vi.mock('lodash.isempty');
 vi.mock('date-fns', { spy: true });
@@ -206,7 +206,7 @@ describe('SignIn component', () => {
 
 		expect(passwordField).toHaveAttribute('type', 'text');
 	});
-	it('should render the "RequestResetPasswordModel" if the forget password button is clicked', async () => {
+	it('should render the "RequestResetPasswordModal" if the forget password button is clicked', async () => {
 		const user = userEvent.setup();
 
 		const Stub = createRoutesStub([
@@ -225,7 +225,7 @@ describe('SignIn component', () => {
 		await user.click(button);
 
 		expect(mockCustomHook.onModal).toBeCalledWith({
-			component: <RequestResetPasswordModel />,
+			component: <RequestResetPasswordModal />,
 			clickToClose: true,
 		});
 	});

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { requestVerificationCode } from '../../../lib/handleAccount';
 
 // Styles
-import styles from './verificationCodeModel.module.css';
+import styles from './verificationCodeModal.module.css';
 import formStyles from '../../../styles/form.module.css';
 import loadingStyles from '../../utils/Loading.module.css';
 import imageStyles from '../../../styles/image.module.css';

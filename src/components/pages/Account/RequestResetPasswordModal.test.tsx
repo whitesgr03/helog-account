@@ -13,7 +13,7 @@ import isEmpty from 'lodash.isempty';
 import { requestResetPassword } from '../../../lib/handleAccount';
 import { formatDistanceStrict } from 'date-fns';
 
-import { RequestResetPasswordModel } from './RequestResetPasswordModel';
+import { RequestResetPasswordModal } from './RequestResetPasswordModal';
 import { Loading } from '../../utils/Loading';
 
 import { useAppDataAPI } from '../AppContext';
@@ -22,12 +22,12 @@ import { verifySchema } from '../../../lib/verifySchema';
 vi.mock('../../../lib/verifySchema', { spy: true });
 vi.mock('../../../lib/handleAccount');
 vi.mock('../../utils/Loading');
-vi.mock('./VerificationCodeModel');
+vi.mock('./VerificationCodeModal');
 vi.mock('../AppContext');
 vi.mock('lodash.isempty');
 vi.mock('date-fns', { spy: true });
 
-describe('RequestResetPasswordModel component', () => {
+describe('RequestResetPasswordModal component', () => {
 	const mockCustomHook = {
 		onAlert: vi.fn(),
 		onModal: vi.fn(),
@@ -44,7 +44,7 @@ describe('RequestResetPasswordModel component', () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
-				Component: RequestResetPasswordModel,
+				Component: RequestResetPasswordModal,
 			},
 		]);
 
@@ -66,7 +66,7 @@ describe('RequestResetPasswordModel component', () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
-				Component: RequestResetPasswordModel,
+				Component: RequestResetPasswordModal,
 			},
 		]);
 
@@ -114,7 +114,7 @@ describe('RequestResetPasswordModel component', () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
-				Component: RequestResetPasswordModel,
+				Component: RequestResetPasswordModal,
 			},
 		]);
 
@@ -148,7 +148,7 @@ describe('RequestResetPasswordModel component', () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
-				Component: RequestResetPasswordModel,
+				Component: RequestResetPasswordModal,
 			},
 		]);
 
@@ -186,7 +186,7 @@ describe('RequestResetPasswordModel component', () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
-				Component: RequestResetPasswordModel,
+				Component: RequestResetPasswordModal,
 			},
 		]);
 
@@ -222,7 +222,7 @@ describe('RequestResetPasswordModel component', () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
-				Component: RequestResetPasswordModel,
+				Component: RequestResetPasswordModal,
 			},
 			{
 				path: '/error',
@@ -245,7 +245,7 @@ describe('RequestResetPasswordModel component', () => {
 		expect(mockCustomHook.onModal).toBeCalledTimes(1);
 		expect(screen.getByText('Error component'));
 	});
-	it('should render a model if the user request resetting password is successful', async () => {
+	it('should render a modal if the user request resetting password is successful', async () => {
 		const user = userEvent.setup();
 
 		const mockResponse = {
@@ -267,7 +267,7 @@ describe('RequestResetPasswordModel component', () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
-				Component: RequestResetPasswordModel,
+				Component: RequestResetPasswordModal,
 			},
 			{
 				path: '/error',

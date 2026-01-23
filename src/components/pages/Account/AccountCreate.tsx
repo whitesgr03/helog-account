@@ -4,7 +4,7 @@ import { register } from '../../../lib/handleAccount';
 import { formatDistanceStrict } from 'date-fns';
 
 import signInStyles from './SignIn.module.css';
-import modelStyles from '../../../styles/model.module.css';
+import modalStyles from '../../../styles/modal.module.css';
 
 import { useAppDataAPI } from '../AppContext';
 import { Loading } from '../../utils/Loading';
@@ -38,9 +38,9 @@ export const AccountCreate = () => {
 					} else {
 						onModal({
 							component: (
-								<div className={modelStyles.model}>
-									<h3 className={modelStyles.title}>Registration failed</h3>
-									<p className={modelStyles.content}>
+								<div className={modalStyles.modal}>
+									<h3 className={modalStyles.title}>Registration failed</h3>
+									<p className={modalStyles.content}>
 										The registration link you used is invalid, expired, or
 										already in use. Please try registering again using a new
 										link.

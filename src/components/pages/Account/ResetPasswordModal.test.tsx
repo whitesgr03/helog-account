@@ -7,7 +7,7 @@ import { createRoutesStub } from 'react-router';
 import isEmpty from 'lodash.isempty';
 import { formatDistanceStrict } from 'date-fns';
 
-import { ResetPasswordModel } from './ResetPasswordModel';
+import { ResetPasswordModal } from './ResetPasswordModal';
 import { Loading } from '../../utils/Loading';
 
 import { useAppDataAPI } from '../AppContext';
@@ -22,7 +22,7 @@ vi.mock('../../../lib/handleAccount');
 vi.mock('lodash.isempty');
 vi.mock('date-fns', { spy: true });
 
-describe('ResetPasswordModel component', () => {
+describe('ResetPasswordModal component', () => {
 	const mockCustomHook = {
 		onAlert: vi.fn(),
 		onModal: vi.fn(),
@@ -31,12 +31,12 @@ describe('ResetPasswordModel component', () => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 		vi.mocked(Loading).mockImplementation(() => <div>Loading component</div>);
 	});
-	it('should render a model if the reset password session is expired', async () => {
+	it('should render a modal if the reset password session is expired', async () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 1,
 					}),
@@ -57,7 +57,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -83,7 +83,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -132,7 +132,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -159,7 +159,7 @@ describe('ResetPasswordModel component', () => {
 			expect(verifySchema).toBeCalledTimes(2);
 		});
 	});
-	it('should render a model if the server validation fails and response status code is 401', async () => {
+	it('should render a modal if the server validation fails and response status code is 401', async () => {
 		const user = userEvent.setup();
 
 		const mockPassword = '12345678';
@@ -178,7 +178,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -218,7 +218,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -255,7 +255,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -289,7 +289,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -331,7 +331,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -370,7 +370,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),
@@ -396,7 +396,7 @@ describe('ResetPasswordModel component', () => {
 		expect(mockCustomHook.onModal).toBeCalledTimes(1);
 		expect(screen.getByText('error component'));
 	});
-	it('should render a model if the user reset password is successful', async () => {
+	it('should render a modal if the user reset password is successful', async () => {
 		const user = userEvent.setup();
 
 		const mockPassword = '12345678';
@@ -410,7 +410,7 @@ describe('ResetPasswordModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					ResetPasswordModel({
+					ResetPasswordModal({
 						email: 'example@gmail',
 						sessionExpireAfter: 10000,
 					}),

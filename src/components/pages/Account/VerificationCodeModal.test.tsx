@@ -13,14 +13,14 @@ import { verifyCode } from '../../../lib/handleAccount';
 import { useAppDataAPI } from '../AppContext';
 
 import { Loading } from '../../utils/Loading';
-import { VerificationCodeModel } from './VerificationCodeModel';
+import { VerificationCodeModal } from './VerificationCodeModal';
 
 vi.mock('../AppContext');
 vi.mock('../../../lib/handleAccount');
 vi.mock('../../utils/Loading');
 vi.mock('../AppContext');
 
-describe('VerificationCodeModel component', () => {
+describe('VerificationCodeModal component', () => {
 	const mockCustomHook = {
 		onAlert: () => {},
 		onModal: vi.fn(),
@@ -28,12 +28,12 @@ describe('VerificationCodeModel component', () => {
 	beforeEach(() => {
 		vi.mocked(useAppDataAPI).mockReturnValue(mockCustomHook);
 	});
-	it('should render a model if the verification code is expired', async () => {
+	it('should render a modal if the verification code is expired', async () => {
 		const Stub = createRoutesStub([
 			{
 				path: '/',
 				Component: () =>
-					VerificationCodeModel({
+					VerificationCodeModal({
 						email: 'example@gmail',
 						codeExpireAfter: 1,
 					}),
@@ -51,7 +51,7 @@ describe('VerificationCodeModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					VerificationCodeModel({
+					VerificationCodeModal({
 						email: 'example@gmail',
 						codeExpireAfter: 10000,
 					}),
@@ -89,7 +89,7 @@ describe('VerificationCodeModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					VerificationCodeModel({
+					VerificationCodeModal({
 						email: 'example@gmail',
 						codeExpireAfter: 100000,
 					}),
@@ -109,7 +109,7 @@ describe('VerificationCodeModel component', () => {
 		expect(codeField).not.toHaveFocus();
 		expect(screen.getByTestId('errorMessage')).not.toBeEmptyDOMElement();
 	});
-	it('should render a model if the verification code was failed too many times', async () => {
+	it('should render a modal if the verification code was failed too many times', async () => {
 		const user = userEvent.setup();
 		const mockResponse = {
 			data: {
@@ -126,7 +126,7 @@ describe('VerificationCodeModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					VerificationCodeModel({
+					VerificationCodeModal({
 						email: 'example@gmail',
 						codeExpireAfter: 100000,
 					}),
@@ -160,7 +160,7 @@ describe('VerificationCodeModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					VerificationCodeModel({
+					VerificationCodeModal({
 						email: 'example@gmail',
 						codeExpireAfter: 100000,
 					}),
@@ -182,7 +182,7 @@ describe('VerificationCodeModel component', () => {
 		expect(mockCustomHook.onModal).toBeCalledTimes(1);
 		expect(screen.getByText('error component'));
 	});
-	it('should render a model if the verification code is successful', async () => {
+	it('should render a modal if the verification code is successful', async () => {
 		const user = userEvent.setup();
 
 		const mockResponse = {
@@ -203,7 +203,7 @@ describe('VerificationCodeModel component', () => {
 			{
 				path: '/',
 				Component: () =>
-					VerificationCodeModel({
+					VerificationCodeModal({
 						email: 'example@gmail',
 						codeExpireAfter: 100000,
 					}),

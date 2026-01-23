@@ -13,7 +13,7 @@ import { login } from '../../../lib/handleAccount';
 import { verifySchema } from '../../../lib/verifySchema';
 import { useAppDataAPI } from '../AppContext';
 import { Loading } from '../../utils/Loading';
-import { RequestResetPasswordModel } from './RequestResetPasswordModel';
+import { RequestResetPasswordModal } from './RequestResetPasswordModal';
 
 const schema = object({
 	email: string()
@@ -118,9 +118,9 @@ export const SignIn = () => {
 		setIsShowPassword(e.target.checked);
 	};
 
-	const handleShowResetPasswordModel = () =>
+	const handleShowResetPasswordModal = () =>
 		onModal({
-			component: <RequestResetPasswordModel />,
+			component: <RequestResetPasswordModal />,
 			clickToClose: true,
 		});
 
@@ -194,7 +194,7 @@ export const SignIn = () => {
 								</label>
 								<button
 									type="button"
-									onClick={handleShowResetPasswordModel}
+									onClick={handleShowResetPasswordModal}
 									className={formStyles.link}
 								>
 									Forget Password?

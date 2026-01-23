@@ -6,7 +6,7 @@ import { formatDistanceStrict } from 'date-fns';
 
 import signInStyles from './SignIn.module.css';
 import formStyles from '../../../styles/form.module.css';
-import modelStyles from '../../../styles/model.module.css';
+import modalStyles from '../../../styles/modal.module.css';
 
 import { requestRegister } from '../../../lib/handleAccount';
 import { verifySchema } from '../../../lib/verifySchema';
@@ -83,9 +83,9 @@ export const SignUp = () => {
 				setDebounce(false);
 				onModal({
 					component: (
-						<div className={modelStyles.model}>
-							<h3 className={modelStyles.title}>Verify your email address</h3>
-							<p className={modelStyles.content}>
+						<div className={modalStyles.modal}>
+							<h3 className={modalStyles.title}>Verify your email address</h3>
+							<p className={modalStyles.content}>
 								As an added security measure, we have send a verification link
 								to your email address:
 								<span className={signInStyles.email}> {formFields.email}</span>.
