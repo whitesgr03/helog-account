@@ -72,6 +72,7 @@ export const SignUp = () => {
 	const navigate = useNavigate();
 
 	const handleRequestRegister = async () => {
+		setIsLoading(true);
 		const controller = new AbortController();
 
 		try {
@@ -121,6 +122,8 @@ export const SignUp = () => {
 			} else {
 				navigate('/error');
 			}
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
