@@ -75,12 +75,11 @@ export const Alert = () => {
 			onTransitionEnd={handleTransitionend}
 			onMouseEnter={handlePauseTimer}
 			onMouseLeave={handleContinueTimer}
-			className={`${styles.alert} ${alert.length === 1 ? styles.active : ''} ${
-				lastAlert.error || alert[0]?.error ? styles.error : ''
-			}`}
+			className={`${styles.alert} ${alert.length === 1 ? styles.active : ''} 
+        ${lastAlert.error || alert[0]?.error ? styles.error : ''}`}
 			data-testid="alert"
 		>
-			<p data-testid="message">{lastAlert.message || alert[0]?.message}</p>
+			<p>{lastAlert.message || alert[0]?.message}</p>
 		</div>
 	);
 };
