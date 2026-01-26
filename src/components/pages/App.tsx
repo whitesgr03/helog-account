@@ -18,12 +18,7 @@ import { useFetchUser } from '../useFetchUser';
 
 export const App = () => {
 	const [isOnline, setIsOnline] = useState(true);
-	const { user, error, isLoading } = useFetchUser();
-
-	const isError =
-		error &&
-		(error.cause instanceof Error ||
-			(error.cause instanceof Response && error.cause.status !== 401));
+	const { isLogin, isError, isLoading } = useFetchUser();
 
 	useEffect(() => {
 		// Remove hash property (#_=_) from facebook login flow
@@ -40,23 +35,24 @@ export const App = () => {
 	}, []);
 
 	useEffect(() => {
-		if (user) {
+		if (isLogin) {
 			window.location.assign(`${import.meta.env.VITE_HELOG_URL}`);
 		}
-	}, [user]);
+	}, [isLogin]);
+
 	return (
 		<AppProvider>
 			<div className={styles.app}>
 				<ScrollRestoration getKey={location => location.key} />
-				{isError ? (
-					<ErrorComponent />
-				) : user ? (
-					<div className={styles.loading}>
-						<Loading text="Redirecting to home page..." />
-					</div>
-				) : isLoading ? (
+				{isLoading ? (
 					<div className={styles.loading}>
 						<Loading text="Loading..." />
+					</div>
+				) : isError ? (
+					<ErrorComponent />
+				) : isLogin ? (
+					<div className={styles.loading}>
+						<Loading text="Redirecting to home page..." />
 					</div>
 				) : (
 					<>
