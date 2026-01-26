@@ -4,8 +4,8 @@ import { getUserInfo } from '../lib/handleUser';
 
 export const useFetchUser = () => {
 	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<Error | null>(null);
-	const [user, setUser] = useState(null);
+	const [isError, setIsError] = useState(false);
+	const [isLogin, setIsLogin] = useState(false);
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -13,15 +13,12 @@ export const useFetchUser = () => {
 
 		const fetchUserInfo = async () => {
 			try {
-				const result = await getUserInfo(signal);
-				if (!signal.aborted) {
-					setUser(result);
-				}
-			} catch (err) {
-				if (err instanceof Error && !signal.aborted) {
-					setError(err);
-					setIsLoading(false);
-				}
+				const response = await getUserInfo(signal);
+				if (response.success) setIsLogin(true);
+			} catch {
+				if (!signal.aborted) setIsError(true);
+			} finally {
+				if (!signal.aborted) setIsLoading(false);
 			}
 		};
 
@@ -30,5 +27,5 @@ export const useFetchUser = () => {
 		return () => controller.abort();
 	}, []);
 
-	return { user, error, isLoading };
+	return { isLogin, isError, isLoading };
 };
