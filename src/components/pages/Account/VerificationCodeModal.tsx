@@ -9,7 +9,7 @@ import { ResetPasswordModal } from './ResetPasswordModal';
 import { ResendVerificationCodeButton } from './ResendVerificationCodeButton';
 
 // Styles
-import styles from './verificationCodeModal.module.css';
+import styles from './VerificationCodeModal.module.css';
 import formStyles from '../../../styles/form.module.css';
 import modalStyles from '../../../styles/modal.module.css';
 
