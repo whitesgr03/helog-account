@@ -18,10 +18,10 @@ const schema = object({
 	username: string()
 		.trim()
 		.required('The username is required.')
-		.max(30, 'The username length must be less then 30.')
+		.max(30, ({ max }) => `The username length must be less than ${max}.`)
 		.matches(
-			/^[a-zA-Z]\w*$/,
-			'The username must begin with alphabet and include alphanumeric or underscore.',
+			/^([a-zA-Z0-9](-|_|\s)?)*[a-zA-Z0-9]$/,
+			'The username must be alphanumeric.',
 		),
 	email: string()
 		.required('The email is required.')
