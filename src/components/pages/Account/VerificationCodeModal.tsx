@@ -30,7 +30,7 @@ export const VerificationCodeModal = ({
 	const timer = useRef<NodeJS.Timeout>(null);
 	const navigate = useNavigate();
 
-	const handleVerifyCode = async () => {
+	const handleVerifyCode = async (verificationCode: string) => {
 		if (failCount >= 3) {
 			onModal({
 				component: (
@@ -50,7 +50,11 @@ export const VerificationCodeModal = ({
 		setIsLoading(true);
 		const controller = new AbortController();
 		try {
-			const response = await verifyCode(controller.signal, code, email);
+			const response = await verifyCode(
+				controller.signal,
+				verificationCode,
+				email,
+			);
 
 			if (response.data.success) {
 				const sessionExpireAfter = Number(response.headers.get('Expire-After'));
@@ -92,7 +96,7 @@ export const VerificationCodeModal = ({
 
 		if (value.length === 6) {
 			e.target.blur();
-			await handleVerifyCode();
+			await handleVerifyCode(value);
 		}
 	};
 
