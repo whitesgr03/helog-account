@@ -53,7 +53,10 @@ const idleAlertComponent = (
 	</div>
 );
 
-export const ResetPasswordModal  = ({ email, sessionExpireAfter }: PropTypes) => {
+export const ResetPasswordModal = ({
+	email,
+	sessionExpireAfter,
+}: PropTypes) => {
 	const [inputErrors, setInputErrors] = useState<inputErrors>({});
 	const [formFields, setFormFields] = useState({
 		password: '',
@@ -213,6 +216,7 @@ export const ResetPasswordModal  = ({ email, sessionExpireAfter }: PropTypes) =>
 							title="The password is required."
 							value={formFields.password}
 							onChange={handleChange}
+							autoFocus={true}
 						/>
 					</label>
 					<label className={formStyles['checkbox-label']}>
