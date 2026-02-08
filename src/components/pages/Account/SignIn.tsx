@@ -53,8 +53,13 @@ export const SignIn = () => {
 			if (result.success) {
 				window.location.assign(`${import.meta.env.VITE_HELOG_URL}`);
 			} else {
-				setInputErrors(result.fields);
-				setDebounce(true);
+				onAlert([
+					{
+						message: `The email or password was incorrect.`,
+						error: true,
+						delay: 5000,
+					},
+				]);
 			}
 		} catch (error) {
 			if (
