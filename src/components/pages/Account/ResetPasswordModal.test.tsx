@@ -66,7 +66,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -92,7 +92,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -141,7 +141,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -187,7 +187,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -231,7 +231,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -268,7 +268,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -298,7 +298,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -312,7 +312,7 @@ describe('ResetPasswordModal component', () => {
 
 		expect(passwordField).toHaveAttribute('type', 'text');
 	});
-	it('should render a alert message if the user registered too many times', async () => {
+	it('should render an alert message if the user registered too many times', async () => {
 		const user = userEvent.setup();
 
 		const mockPassword = '12345678';
@@ -340,7 +340,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -383,7 +383,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
@@ -419,7 +419,7 @@ describe('ResetPasswordModal component', () => {
 
 		render(<Stub initialEntries={['/']} />);
 
-		const passwordField = screen.getByLabelText('New Password', {
+		const passwordField = screen.getByLabelText('Enter your New Password', {
 			selector: 'input',
 		});
 
