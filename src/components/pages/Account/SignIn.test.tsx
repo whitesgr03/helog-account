@@ -98,15 +98,11 @@ describe('SignIn component', () => {
 			expect(verifySchema).toBeCalledTimes(2);
 		});
 	});
-	it('should render the error field messages and active debounce if the server validation fails after request registration', async () => {
+	it('should render an alert message if the the fields validation fails on the server', async () => {
 		const user = userEvent.setup();
 
 		const mockResolve = {
 			success: false,
-			fields: {
-				email: 'error',
-				password: 'error',
-			},
 		};
 
 		vi.mocked(login).mockImplementationOnce(
@@ -144,12 +140,9 @@ describe('SignIn component', () => {
 		await user.click(submitButton);
 
 		await waitForElementToBeRemoved(screen.queryByText('Loading component'));
-
+		expect(verifySchema).toBeCalledTimes(1);
 		expect(login).toBeCalledTimes(1);
-		expect(screen.queryAllByText('Message Placeholder')).toHaveLength(0);
-		await waitFor(() => {
-			expect(verifySchema).toBeCalledTimes(2);
-		});
+		expect(mockCustomHook.onAlert).toBeCalledTimes(1);
 	});
 	it('should check if input errors are empty when the debounce is true and submit button is clicked', async () => {
 		const user = userEvent.setup();
@@ -229,7 +222,7 @@ describe('SignIn component', () => {
 			clickToClose: true,
 		});
 	});
-	it('should render a alert message if the user registered too many times', async () => {
+	it('should render an alert message if the user registered too many times', async () => {
 		const user = userEvent.setup();
 
 		const mockResponse = new Response('', {
