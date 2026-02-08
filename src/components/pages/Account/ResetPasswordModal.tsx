@@ -204,7 +204,7 @@ export const ResetPasswordModal  = ({ email, sessionExpireAfter }: PropTypes) =>
 			<form className={formStyles.form} onSubmit={handleSubmit}>
 				<div>
 					<label className={formStyles.label} htmlFor="password">
-						New Password
+						Enter your New Password
 						<input
 							className={`${modalStyles.input} ${inputErrors.password ? formStyles['input-error'] : ''}`}
 							id="password"
