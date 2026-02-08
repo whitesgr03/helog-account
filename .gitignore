@@ -33,7 +33,6 @@ coverage
 *.sw?
 
 .env*
-*vercel*
 
 delete_*
 
