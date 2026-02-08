@@ -95,7 +95,7 @@ describe('ResendVerificationCodeButton component', () => {
 		expect(requestVerificationCode).toBeCalledTimes(1);
 		expect(screen.getByText('error component'));
 	});
-	it('should render a alert message if the user requests verification code too many times', async () => {
+	it('should render an alert message if the user requests verification code too many times', async () => {
 		const user = userEvent.setup();
 
 		const mockResponse = new Response('', {
@@ -165,7 +165,7 @@ describe('ResendVerificationCodeButton component', () => {
 		expect(mockCustomHook.onModal).toBeCalledTimes(1);
 		expect(screen.getByText('error component'));
 	});
-	it('should render a alert message and active countdown if the user requests verification code successful', async () => {
+	it('should render an alert message and active countdown if the user requests verification code successful', async () => {
 		vi.spyOn(window, 'clearInterval');
 		vi.mocked(requestVerificationCode).mockResolvedValueOnce({
 			success: true,

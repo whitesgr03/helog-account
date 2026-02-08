@@ -185,7 +185,7 @@ describe('SignUp component', () => {
 			expect(verifySchema).toBeCalledTimes(2);
 		});
 	});
-	it('should render a alert message if the user registered too many times', async () => {
+	it('should render an alert message if the user registered too many times', async () => {
 		const user = userEvent.setup();
 
 		const mockResponse = new Response('', {

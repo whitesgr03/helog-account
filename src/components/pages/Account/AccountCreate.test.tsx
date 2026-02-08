@@ -64,7 +64,7 @@ describe('SignIn component', () => {
 		expect(await screen.findByText('Sign up component'));
 		expect(mockCustomHook.onModal).toBeCalledTimes(1);
 	});
-	it('should render a alert message if the user registered too many times', async () => {
+	it('should render an alert message if the user registered too many times', async () => {
 		const mockResponse = new Response('', {
 			status: 429,
 			headers: {
@@ -114,7 +114,7 @@ describe('SignIn component', () => {
 
 		expect(await screen.findByText('Error component'));
 	});
-	it('should render a alert message and navigate to sign in page if the user registered successful', async () => {
+	it('should render an alert message and navigate to sign in page if the user registered successful', async () => {
 		vi.mocked(register).mockResolvedValueOnce({ success: true });
 
 		const Stub = createRoutesStub([

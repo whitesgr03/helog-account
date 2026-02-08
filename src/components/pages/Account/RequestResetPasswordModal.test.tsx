@@ -167,7 +167,7 @@ describe('RequestResetPasswordModal component', () => {
 		await user.click(submitButton);
 		expect(isEmpty).toBeCalledTimes(1);
 	});
-	it('should render a alert message if the user registered too many times', async () => {
+	it('should render an alert message if the user registered too many times', async () => {
 		const user = userEvent.setup();
 
 		const mockResponse = new Response('', {
