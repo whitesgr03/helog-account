@@ -98,7 +98,7 @@ export const ResendVerificationCodeButton = ({ email }: Props) => {
 	}, []);
 
 	return (
-		<>
+		<div className={styles.resend}>
 			{isLoading ? (
 				<p>
 					Sending ...
@@ -108,12 +108,12 @@ export const ResendVerificationCodeButton = ({ email }: Props) => {
 				</p>
 			) : (
 				<button
-					className={`${styles.resend} ${formStyles.link}`}
+					className={formStyles.link}
 					onClick={handleRequestVerificationCode}
 				>
 					Resend code{timeRemaining > 0 && ` (${timeRemaining}s)`}
 				</button>
 			)}
-		</>
+		</div>
 	);
 };
