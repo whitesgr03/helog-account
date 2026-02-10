@@ -12,8 +12,10 @@ export const Alert = () => {
 	const { onAlert } = useAppDataAPI();
 	const [pause, setPause] = useState(false);
 	const timer = useRef<NodeJS.Timeout>(null);
+	const interval = useRef<NodeJS.Timeout>(null);
 	const startTime = useRef(0);
 	const remainingTime = useRef(0);
+	const messageRef = useRef<HTMLParagraphElement>(null);
 
 	// The lastAlert state will store the last alert data before the alert array is set to empty,
 	// to prevent the message and error class from disappearing before the alert block is hidden.
@@ -21,8 +23,23 @@ export const Alert = () => {
 		{} as { error?: boolean; message?: string },
 	);
 
+	const autoScrolling = () => {
+		const target = messageRef.current as HTMLParagraphElement;
+		if (target.scrollLeft + target.clientWidth >= target.scrollWidth) {
+			clearInterval(interval.current as NodeJS.Timeout);
+			timer.current = setTimeout(endAlert, remainingTime.current);
+			return;
+		}
+		target.scrollLeft = target.scrollLeft + 1;
+	};
+
 	const endAlert = () => {
+		const target = messageRef.current as HTMLParagraphElement;
+
+		target.scrollLeft = 0;
 		remainingTime.current = 0;
+
+		clearInterval(interval.current as NodeJS.Timeout);
 		clearTimeout(timer.current as NodeJS.Timeout);
 
 		const nextAlert = alert[1] ? [alert[1]] : [];
@@ -41,7 +58,9 @@ export const Alert = () => {
 			remainingTime.current = alert[0].delay;
 		}
 		clearTimeout(timer.current as NodeJS.Timeout);
-		timer.current = setTimeout(() => endAlert(), remainingTime.current);
+		clearInterval(interval.current as NodeJS.Timeout);
+
+		interval.current = setInterval(autoScrolling, 30);
 	};
 
 	const handleTransitionend = () => {
@@ -59,6 +78,7 @@ export const Alert = () => {
 	const handlePauseTimer = () => {
 		setPause(true);
 		clearTimeout(timer.current as NodeJS.Timeout);
+		clearInterval(interval.current as NodeJS.Timeout);
 		if (remainingTime.current !== 0) {
 			remainingTime.current -= Date.now() - startTime.current;
 		}
@@ -79,7 +99,7 @@ export const Alert = () => {
         ${lastAlert.error || alert[0]?.error ? styles.error : ''}`}
 			data-testid="alert"
 		>
-			<p>{lastAlert.message || alert[0]?.message}</p>
+			<p ref={messageRef}>{lastAlert.message || alert[0]?.message}</p>
 		</div>
 	);
 };
