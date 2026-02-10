@@ -199,7 +199,7 @@ describe('SignIn component', () => {
 
 		expect(passwordField).toHaveAttribute('type', 'text');
 	});
-	it('should render the "RequestResetPasswordModal" if the forget password button is clicked', async () => {
+	it('should render the "RequestResetPasswordModal" if the forgot password button is clicked', async () => {
 		const user = userEvent.setup();
 
 		const Stub = createRoutesStub([
@@ -212,7 +212,7 @@ describe('SignIn component', () => {
 		render(<Stub initialEntries={['/']} />);
 
 		const button = screen.getByRole('button', {
-			name: 'Forget Password?',
+			name: 'Forgot Password?',
 		});
 
 		await user.click(button);
