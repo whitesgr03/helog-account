@@ -48,6 +48,7 @@ describe('Alert component', () => {
 		vi.mocked(useAlert).mockReturnValueOnce(mockAlertData).mockReturnValue([]);
 
 		vi.spyOn(window, 'clearTimeout');
+		vi.spyOn(window, 'clearInterval');
 
 		render(<Alert />);
 
@@ -61,11 +62,13 @@ describe('Alert component', () => {
 		fireEvent.transitionEnd(alert);
 
 		expect(clearTimeout).toBeCalledTimes(1);
+		expect(clearInterval).toBeCalledTimes(1);
 
 		act(() => {
 			vi.runAllTimers();
 		});
 
+		expect(clearInterval).toBeCalledTimes(3);
 		expect(alert).not.toHaveClass(/active/);
 
 		fireEvent.transitionEnd(alert);
