@@ -147,16 +147,16 @@ export const VerificationCodeModal = ({
 							autoFocus={true}
 						/>
 					</label>
-				</div>
-				<div className={styles['modal-bottom']}>
-					<ResendVerificationCodeButton email={email} />
-					<div
-						className={`${styles.error} ${formStyles['error-message']} ${errorMessage ? formStyles['error-message-active'] : ''}`}
-					>
-						<span className={`${formStyles.icon} ${formStyles.alert}`} />
-						<p className={formStyles.message} data-testid="errorMessage">
-							{errorMessage}
-						</p>
+					<div className={styles['modal-bottom']}>
+						<div
+							className={`${styles.error} ${formStyles['error-message']} ${errorMessage ? formStyles['error-message-active'] : ''}`}
+						>
+							<span className={`${formStyles.icon} ${formStyles.alert}`} />
+							<p className={formStyles.message} data-testid="errorMessage">
+								{errorMessage}
+							</p>
+						</div>
+						<ResendVerificationCodeButton email={email} />
 					</div>
 				</div>
 			</div>
