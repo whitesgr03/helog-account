@@ -186,25 +186,16 @@ export const SignIn = () => {
 									onChange={handleChange}
 								/>
 							</label>
-							<div className={styles.wrap}>
-								<label className={formStyles['checkbox-label']}>
-									<input
-										className={formStyles.checkbox}
-										type="checkbox"
-										id="isShowPassword"
-										name="isShowPassword"
-										onChange={handleShowPassword}
-									/>
-									Show Password
-								</label>
-								<button
-									type="button"
-									onClick={handleShowResetPasswordModal}
-									className={formStyles.link}
-								>
-									Forget Password?
-								</button>
-							</div>
+							<label className={formStyles['checkbox-label']}>
+								<input
+									className={formStyles.checkbox}
+									type="checkbox"
+									id="isShowPassword"
+									name="isShowPassword"
+									onChange={handleShowPassword}
+								/>
+								Show Password
+							</label>
 							<div
 								className={`${formStyles['error-message']} ${inputErrors.password ? formStyles['error-message-active'] : ''}`}
 							>
@@ -213,6 +204,13 @@ export const SignIn = () => {
 									{inputErrors.password ?? 'Message Placeholder'}
 								</p>
 							</div>
+							<button
+								type="button"
+								onClick={handleShowResetPasswordModal}
+								className={`${formStyles.link} ${styles['forgot-password']}`}
+							>
+								Forgot Password?
+							</button>
 						</div>
 						<button className={formStyles.submit} type="submit">
 							Login
