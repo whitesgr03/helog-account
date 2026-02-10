@@ -87,7 +87,7 @@ export const VerificationCodeModal = ({
 		const { value } = e.currentTarget;
 
 		if (!(await number().integer().min(0).max(999999).isValid(+value.trim()))) {
-			setErrorMessage('Code must be 6-digit numbers.');
+			setErrorMessage('Code must be numbers.');
 			return;
 		}
 
