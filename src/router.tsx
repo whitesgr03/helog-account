@@ -28,7 +28,7 @@ export const Router = () => (
 						element: <SignUp />,
 					},
 					{
-						path: 'account',
+						path: 'create',
 						element: <AccountCreate />,
 					},
 					{
