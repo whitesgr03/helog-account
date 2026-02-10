@@ -125,10 +125,9 @@ export const VerificationCodeModal = ({
 			<div className={modalStyles.modal}>
 				<h3 className={modalStyles.title}>Enter your validation code</h3>
 				<p className={modalStyles.content}>
-					If your email address:
-					<span className={styles.email}> {email} </span>
-					is registered, we will send a validation code to that email address,
-					please enter the 6-digit code to reset your password.
+					We have send a validation code to
+					<span className={styles.email}> {email}</span>, please enter the
+					6-digit code to reset your password.
 				</p>
 				<div>
 					<label className={formStyles.label} htmlFor="code">
