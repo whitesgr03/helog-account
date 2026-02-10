@@ -76,7 +76,7 @@ describe('Alert component', () => {
 		expect(alert).not.toHaveClass(/error/);
 		expect(message).toHaveTextContent('');
 	});
-	it(`should pause or resume timer if the user moves the mouse in and out of the alarm element.`, async () => {
+	it(`should pause or resume timer if the user moves the mouse in and out of the alert element.`, async () => {
 		const user = userEvent.setup({
 			advanceTimers: vi.advanceTimersByTime.bind(vi),
 		});
