@@ -23,16 +23,6 @@ export const Alert = () => {
 		{} as { error?: boolean; message?: string },
 	);
 
-	const autoScrolling = () => {
-		const target = messageRef.current as HTMLParagraphElement;
-		if (target.scrollLeft + target.clientWidth >= target.scrollWidth) {
-			clearInterval(interval.current as NodeJS.Timeout);
-			timer.current = setTimeout(endAlert, remainingTime.current);
-			return;
-		}
-		target.scrollLeft = target.scrollLeft + 1;
-	};
-
 	const endAlert = () => {
 		const target = messageRef.current as HTMLParagraphElement;
 
@@ -49,6 +39,16 @@ export const Alert = () => {
 		}
 
 		onAlert(nextAlert);
+	};
+
+	const autoScrolling = () => {
+		const target = messageRef.current as HTMLParagraphElement;
+		if (target.scrollLeft + target.clientWidth >= target.scrollWidth) {
+			clearInterval(interval.current as NodeJS.Timeout);
+			timer.current = setTimeout(endAlert, remainingTime.current);
+			return;
+		}
+		target.scrollLeft = target.scrollLeft + 1;
 	};
 
 	const startTimer = () => {
