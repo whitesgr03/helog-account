@@ -30,10 +30,6 @@
 	align-self: flex-end;
 }
 
-.error {
-	align-self: flex-start;
-}
-
 @media (width >= 400px) {
 	.code-wrap {
 		column-gap: 8px;
@@ -51,10 +47,6 @@
 	}
 
 	.resend {
-		align-self: center;
-	}
-
-	.error {
 		align-self: center;
 	}
 }
