@@ -42,7 +42,7 @@
 	}
 
 	.modal-bottom {
-		flex-direction: row-reverse;
+		flex-direction: row;
 		justify-content: space-between;
 	}
 
