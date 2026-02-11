@@ -16,7 +16,7 @@ export const Footer = () => {
 					</a>
 				</address>
 			</div>
-			<p>© 2025 Designed & coded by Weiss Bai</p>
+			<p>© 2026 Designed & coded by Weiss Bai</p>
 		</footer>
 	);
 };
