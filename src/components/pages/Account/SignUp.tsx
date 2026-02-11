@@ -212,7 +212,7 @@ export const SignUp = () => {
 								<input
 									className={`${formStyles.input} ${inputErrors?.email ? formStyles['input-error'] : ''}`}
 									id="email"
-									type="text"
+									type="email"
 									name="email"
 									title="The email is required and must be standard format."
 									value={formFields.email}
