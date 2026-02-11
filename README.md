@@ -1,6 +1,6 @@
 # HeLog Account
 
-HeLog-Account is the HeLog blog's authenticator built with React. Allows users to sign in with SSO (google, facebook) or email address and sign up. Hosted on Vercel.
+HeLog-Account is a login system using an email and password or SSO (google, facebook) to access Helog services. Hosted on Vercel.
 
 ![website screenshots](https://i.meee.com.tw/0rbkFqL.png)
 
