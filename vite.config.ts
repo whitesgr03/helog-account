@@ -7,7 +7,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
 	plugins: [react()],
 	preview: {
-		port: 9001,
+		port: 8001,
 		headers: {
 			'X-Content-Type-Options': ' nosniff',
 			'Cross-Origin-Embedder-Policy': 'credentialless',
